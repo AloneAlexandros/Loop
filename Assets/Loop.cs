@@ -1,6 +1,8 @@
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Loop : MonoBehaviour
@@ -19,10 +21,21 @@ public class Loop : MonoBehaviour
 
     private bool _resetable = true;
     public TextMeshProUGUI loopText;
+
+    [SerializeField] private int overrideLevel;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
         LoopsLeft = loopsPerRound[Movethatcamera.CurrentRoom];
+        #if UNITY_EDITOR
+        if (overrideLevel != 0)
+        {
+            Movethatcamera.CurrentRoom = overrideLevel;
+            LoopsLeft = 0;
+            overrideLevel = 0;
+            player.transform.Translate(18.29f * Movethatcamera.CurrentRoom, 0, 0);
+        }
+        #endif
     }
 
     // Update is called once per frame
@@ -43,6 +56,7 @@ public class Loop : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
+            this.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f);
             this.transform.position = Input.mousePosition;
             this.GetComponent<Image>().enabled = true;
             loopyBoi.GetComponent<Image>().enabled = true;
@@ -59,12 +73,18 @@ public class Loop : MonoBehaviour
             if (LoopsLeft > 0)
             {
                 player.AddForce(loopyBoi.transform.right * force);
+                player.transform.localScale = new Vector3(0.65f,0.65f,0.65f);
+                player.transform.DOPunchScale(new Vector3(-0.2f, 0.2f, 0.1f), 0.3f);
                 LoopsLeft--;
                 _resetable = false;
                 StartCoroutine(QuickWait());
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            movethatcamera.ResetMap();
+        }
         if (_rotate)
         {
            // Quaternion rotation = Quaternion.LookRotation(
@@ -74,11 +94,10 @@ public class Loop : MonoBehaviour
            // transform.rotation = new Quaternion( 0 , 0 , rotation.z , rotation.w ); 
            loopyBoi.transform.right = Input.mousePosition - transform.position;
         }
-
-        IEnumerator QuickWait()
-        {
-            yield return new WaitForSeconds(0.5f);
-            _resetable = true;
-        }
+    }
+    IEnumerator QuickWait()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _resetable = true;
     }
 }

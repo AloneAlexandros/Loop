@@ -10,11 +10,6 @@ public class Movethatcamera : MonoBehaviour
     public static int CurrentRoom = 0;
 
     public Loop loop;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        CurrentRoom = 0;
-    }
 
     // Update is called once per frame
     void Update()
@@ -45,6 +40,7 @@ public class Movethatcamera : MonoBehaviour
         playerTransform.DOMoveX(-7 + 18.29f*CurrentRoom, 1);
         playerTransform.DOMoveY(0, 1);
         playerTransform.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+        playerTransform.DOScale(new Vector3(0.65f, 0.65f, 0.65f), 1);
         loop.Start();
     }
 }
