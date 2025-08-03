@@ -62,7 +62,7 @@ public class Loop : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            if (_timeSinceLastClick < 0.3f)
+            if (_timeSinceLastClick < 0.3f && LoopsLeft < 1)
             {
                 movethatcamera.ResetMap();
                 _doNotShoot = true;
