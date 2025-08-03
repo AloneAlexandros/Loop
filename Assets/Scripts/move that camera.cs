@@ -28,7 +28,7 @@ public class Movethatcamera : MonoBehaviour
             }
             else
             {
-                CurrentRoom--;
+                ResetMap();
             } 
             ResetMap();
         }
