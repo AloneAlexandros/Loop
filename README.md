@@ -5,3 +5,4 @@
 - Press R or double tap to reset the map!
 # Happy golfing!
 The project used to go by the name "Loop" before I eneded up on the name "Loopy Golf" which is the reason why on hackatime it uses two seperate projects
+The game is built with Unity 6000.0.27f, art made with figma and music/sfx with GarageBand
