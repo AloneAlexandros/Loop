@@ -1,27 +1,19 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class End : MonoBehaviour
 {
     public GameObject endText;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
+    public GameObject particles;
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player?")
         {
             endText.SetActive(true);
+            endText.transform.DOPunchScale(new Vector3(0.005f,0.005f,0.005f),0.5f);
+            Instantiate(particles, collision.transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
+            this.GetComponent<AudioSource>().Play();
         }
     }
 }

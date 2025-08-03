@@ -97,6 +97,7 @@ public class Loop : MonoBehaviour
                 LoopsLeft--;
                 _resetable = false;
                 StartCoroutine(QuickWait());
+                this.gameObject.GetComponent<AudioSource>().Play();
             }
         }
 

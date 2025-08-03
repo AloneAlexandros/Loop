@@ -21,5 +21,6 @@ public class PlayerCollideAnimation : MonoBehaviour
         transform.localScale = new Vector3(0.65f,0.65f,0.65f);
         transform.DOPunchScale(new Vector3(-0.1f, 0.1f, 0.1f), 0.3f);
         Instantiate(particles, transform.position, Quaternion.identity);
+        this.gameObject.GetComponent<AudioSource>().Play();
     }
 }
