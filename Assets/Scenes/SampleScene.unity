@@ -15848,7 +15848,7 @@ MonoBehaviour:
   movethatcamera: {fileID: 220390348}
   loopsPerRound: 01000000010000000100000002000000010000000100000002000000030000000100000002000000
   loopText: {fileID: 643719415}
-  overrideLevel: 9
+  overrideLevel: 0
 --- !u!114 &220390348
 MonoBehaviour:
   m_ObjectHideFlags: 0

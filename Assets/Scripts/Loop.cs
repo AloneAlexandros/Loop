@@ -1,6 +1,7 @@
 using System.Collections;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -23,6 +24,10 @@ public class Loop : MonoBehaviour
     public TextMeshProUGUI loopText;
 
     [SerializeField] private int overrideLevel;
+
+    private float _timeSinceLastClick = 1;
+
+    private bool _doNotShoot = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
@@ -41,6 +46,7 @@ public class Loop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _timeSinceLastClick += Time.deltaTime;
         if (LoopsLeft > 0)
         {
             loopyBoi.GetComponent<Image>().color = Color.green;
@@ -56,6 +62,14 @@ public class Loop : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
+            if (_timeSinceLastClick < 0.3f)
+            {
+                movethatcamera.ResetMap();
+                _doNotShoot = true;
+                _timeSinceLastClick = 0;
+                return;
+            }
+            _timeSinceLastClick = 0;
             this.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f);
             this.transform.position = Input.mousePosition;
             this.GetComponent<Image>().enabled = true;
@@ -65,6 +79,11 @@ public class Loop : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
+            if (_doNotShoot)
+            {
+                _doNotShoot = false;
+                return;
+            }
             //player movement logic 
             this.GetComponent<Image>().enabled = false;
             loopyBoi.GetComponent<Image>().enabled = false;
